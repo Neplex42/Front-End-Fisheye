@@ -19,6 +19,13 @@
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.contact_button:hover,
+.contact_button:focus {
+  background-color: #db8876;
+  color: #000;
 }
 
 .modal {
