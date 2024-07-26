@@ -1,4 +1,4 @@
-import { getPhotographerHeader } from '../templates/photographer.js';
+import { getPhotographerHeader, createLikesHTML, createPriceHTML, getPhotographerLikes, getUserCardDOM  } from '../templates/photographer.js';
 import { mediaFactory } from '../templates/media.js';
 
 async function fetchPhotographerAndMedia() {
@@ -18,7 +18,6 @@ const getParamsId = () => {
 
 async function displayPhotographer(photographer) {
   const photographerHeaderSection = document.querySelector('.photograph-header');
-
   const photographerHeader = getPhotographerHeader(photographer);
   photographerHeaderSection.appendChild(photographerHeader);
 }
@@ -36,15 +35,30 @@ async function displayMedia(media, photographerName) {
   })
 }
 
+async function displayLikes(mediaFromThePhotographer, photographer) {
+  const likes = getPhotographerLikes(mediaFromThePhotographer)
+  const likesHTML = createLikesHTML(likes)
+
+  document
+    .querySelector('.likes_and_price_container')
+    .appendChild(likesHTML)
+}
+
+async function displayPrice(photographer) {
+  const priceHTML = createPriceHTML(photographer.price)
+
+  document
+    .querySelector('.likes_and_price_container')
+    .appendChild(priceHTML)
+}
+
 async function getPhotographerAndMedia(paramsId) {
   const { photographers, media } = await fetchPhotographerAndMedia();
 
-  // get photographer from the id in the url
   const photographer = photographers.find(
     (photographer) => photographer.id === paramsId
   );
 
-  // display photographer header
   if (photographer) {
     await displayPhotographer(photographer);
   } else {
@@ -55,8 +69,9 @@ async function getPhotographerAndMedia(paramsId) {
     (media) => media.photographerId === paramsId
   );
 
-  // display media from the photographer
   await displayMedia(mediaFromPhotographer, photographer.name)
+  await displayLikes(mediaFromPhotographer, photographer)
+  await displayPrice(photographer)
 }
 
 getPhotographerAndMedia(getParamsId());

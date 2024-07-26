@@ -1,7 +1,5 @@
-import { focusTrapHandler } from '../utils/contactForm.js'
-
 export function mediaFactory(data, photographerName) {
-  const { image, video, likes, title } = data
+  const { date, id, image, video, likes, photographerId, price, title } = data
 
   // Define media type
   const mediaType = video ? video : image
@@ -82,11 +80,39 @@ export function mediaFactory(data, photographerName) {
     mediaCard.appendChild(mediaContainer)
     mediaCard.appendChild(descriptionContainer)
 
+    // Add event listeners for likes
+    likeIcon.addEventListener('click', () => handleLikes(likeIcon, mediaLikes))
+    likeIcon.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') handleLikes(likeIcon, mediaLikes)
+    })
+
     return mediaCard
   }
 
+  function handleLikes(likeIcon, cardLikesDom) {
+    // Get total likes dom element
+    const totalPhotographerLikes = document.querySelector('.total_photographer_likes')
+
+    // Toggle like icon
+    likeIcon.classList.toggle('media_like_icon_liked')
+
+    let totalLikes = Number(totalPhotographerLikes.textContent)
+    let cardLikes = Number(cardLikesDom.textContent)
+
+    // Update card likes and total photographer likes
+    if (likeIcon.classList.contains('media_like_icon_liked')) {
+      cardLikesDom.textContent = cardLikes + 1
+      totalPhotographerLikes.textContent = `${totalLikes + 1}`
+      likeIcon.setAttribute('aria-label', 'Retirer un like')
+    } else {
+      cardLikesDom.textContent = cardLikes - 1
+      totalPhotographerLikes.textContent = `${totalLikes - 1}`
+      likeIcon.setAttribute('aria-label', 'Ajouter un like')
+    }
+  }
+
   function closeWithEscapeKey(e) {
-    if (e.key === 'Escape') closeLightbox(e)
+    if (e.key === 'Escape') closeLightbox()
   }
 
   function closeLightbox() {
@@ -226,7 +252,7 @@ export function mediaFactory(data, photographerName) {
     if (isVideo) {
       newMediaElement = document.createElement('video');
       newMediaElement.classList.add('lightbox_media');
-      newMediaElement.setAttribute('controls', '');
+      newMediaElement.setAttribute('controls', ''); // Ajoutez les contrôles
       newMediaElement.setAttribute('autoplay', '');
       newMediaElement.setAttribute('muted', '');
       newMediaElement.src = selectedDirectionMedia.src;

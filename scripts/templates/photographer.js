@@ -53,6 +53,39 @@ export function getUserCardDOM(data) {
   return article;
 }
 
+export function getPhotographerLikes(mediaFromPhotographer) {
+  let likeCount = 0
+
+  mediaFromPhotographer.forEach((media) => (likeCount += media.likes))
+
+  return likeCount
+}
+
+export function convertToHTML(string) {
+  const parser = new DOMParser()
+  const html = parser.parseFromString(string, 'text/html')
+  return html.body.firstChild
+}
+
+export function createLikesHTML(likes) {
+  const likesContainer = `
+        <div class='likes_container'>
+          <p class='total_photographer_likes'>${likes}</p>
+        </div>   
+    `
+  return convertToHTML(likesContainer)
+}
+
+export function createPriceHTML(price) {
+  const priceContainer = `
+      <div class='price_container'>
+        <p>${price}€ / jour</p>
+      </div>
+    `
+
+  return convertToHTML(priceContainer)
+}
+
 export function getPhotographerHeader(data) {
   const { city, country, name, portrait, tagline } = data;
   const picture = `assets/images/ID_pic/${portrait}`;

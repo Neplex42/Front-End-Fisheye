@@ -4,6 +4,7 @@
 @import url('media_card.css');
 @import url('modal.css');
 @import url('lightbox.css');
+@import url('likes_and_price_insert.css');
 
 * {
   font-family: "DM Sans", sans-serif;
@@ -12,10 +13,9 @@
   box-sizing: border-box;
 }
 
-*:focus,
-html:focus,
-body:focus {
-  border-radius: 5px;
+*:focus-visible,
+html:focus-visible,
+body:focus-visible {
   outline: #901c1c solid 2px;
 }
 
