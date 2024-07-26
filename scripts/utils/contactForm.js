@@ -1,5 +1,5 @@
 //Does not remove the tab from the form
-const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
+export const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
   let isTabPressed = e.key === 'Tab' || e.keyCode === 9
 
   if (!isTabPressed) {
@@ -19,7 +19,11 @@ const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
   }
 }
 
-function displayModal() {
+export function displayModal(name) {
+  // Add photographer name to modal title
+  const modalTitle = document.querySelector('#contact_name')
+  modalTitle.textContent = `Contactez-moi ${name}`
+
   const modal = document.getElementById("contact_modal");
   modal.style.display = "block";
 
@@ -53,6 +57,7 @@ function displayModal() {
   firstInput.focus()
 }
 
+document.querySelector('#close_modal-btn')?.addEventListener('click', closeModal)
 function closeModal() {
   event.preventDefault()
 
@@ -85,6 +90,7 @@ function closeModal() {
   )
 }
 
+document.querySelector('#send_form_contact_button')?.addEventListener('click', displayFormDataAndShowSuccessMessage)
 // Display form data in console
 function displayFormDataAndShowSuccessMessage() {
   event.preventDefault()

@@ -3,12 +3,20 @@
 @import url("header_photographer.css");
 @import url('media_card.css');
 @import url('modal.css');
+@import url('lightbox.css');
 
 * {
   font-family: "DM Sans", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+*:focus,
+html:focus,
+body:focus {
+  border-radius: 5px;
+  outline: #901c1c solid 2px;
 }
 
 header {

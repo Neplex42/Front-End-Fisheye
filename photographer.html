@@ -71,16 +71,16 @@
               aria-label="Send"
               type="submit"
               class="contact_button modal_btn"
-              onclick="displayFormDataAndShowSuccessMessage()"
+              id="send_form_contact_button"
             >
               Envoyer
             </button>
           </div>
         </form>
         <button
+                id="close_modal-btn"
           aria-label="Close Contact form"
           class="close_modal-btn"
-          onclick="closeModal()"
         >
           <img src="assets/icons/close.svg" alt="" />
         </button>
@@ -90,6 +90,6 @@
     </div>
 </div>
 <script type="module" src="./scripts/pages/photographer.js"></script>
-<script src="./scripts/utils/contactForm.js"></script>
+<script type="module" src="./scripts/utils/contactForm.js"></script>
 </body>
 </html>

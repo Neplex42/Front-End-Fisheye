@@ -1,4 +1,5 @@
-import { getPhotographerHeader, mediaFactory } from '../templates/photographer.js';
+import { getPhotographerHeader } from '../templates/photographer.js';
+import { mediaFactory } from '../templates/media.js';
 
 async function fetchPhotographerAndMedia() {
   const response = await fetch('data/photographers.json');
@@ -29,7 +30,8 @@ async function displayMedia(media, photographerName) {
   mainSection.appendChild(mediaContainer)
 
   media.forEach((media) => {
-    const mediaCard = mediaFactory(media, photographerName)
+    const mediaModel = mediaFactory(media, photographerName)
+    const mediaCard = mediaModel.getMediaCard()
     mediaContainer.appendChild(mediaCard)
   })
 }
