@@ -13,7 +13,7 @@ export function getUserCardDOM(data) {
   link.setAttribute("href", `photographer.html?id=${id}`);
   link.setAttribute("class", "photographer_link");
   link.setAttribute("tabindex", "0");
-  link.setAttribute("aria-label", `Voir la page de ${name}`);
+  link.setAttribute("aria-label", `${name}`);
   link.setAttribute("role", "link");
 
   article.setAttribute("class", "photographer_card");
