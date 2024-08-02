@@ -1,5 +1,5 @@
 //Does not remove the tab from the form
-export const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
+const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
   let isTabPressed = e.key === 'Tab' || e.keyCode === 9
 
   if (!isTabPressed) {

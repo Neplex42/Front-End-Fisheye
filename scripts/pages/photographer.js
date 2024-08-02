@@ -1,5 +1,12 @@
-import { getPhotographerHeader, createLikesHTML, createPriceHTML, getPhotographerLikes, getUserCardDOM  } from '../templates/photographer.js';
+import {
+  getPhotographerHeader,
+  createLikesHTML,
+  createPriceHTML,
+  getPhotographerLikes,
+  getUserCardDOM
+} from '../templates/photographer.js';
 import { mediaFactory } from '../templates/media.js';
+import { filtersFactory } from "../templates/filter.js";
 
 async function fetchPhotographerAndMedia() {
   const response = await fetch('data/photographers.json');
@@ -40,23 +47,30 @@ async function displayLikes(mediaFromThePhotographer, photographer) {
   const likesHTML = createLikesHTML(likes)
 
   document
-    .querySelector('.likes_and_price_container')
-    .appendChild(likesHTML)
+      .querySelector('.likes_and_price_container')
+      .appendChild(likesHTML)
 }
 
 async function displayPrice(photographer) {
   const priceHTML = createPriceHTML(photographer.price)
 
   document
-    .querySelector('.likes_and_price_container')
-    .appendChild(priceHTML)
+      .querySelector('.likes_and_price_container')
+      .appendChild(priceHTML)
+}
+
+async function displayFilters(mediaFromPhotographer, photographerName) {
+  const filtersContainer = document.querySelector('.filters_container')
+  const filtersModel = filtersFactory(mediaFromPhotographer, photographerName)
+  const filters = filtersModel.getFilters()
+  filtersContainer.appendChild(filters)
 }
 
 async function getPhotographerAndMedia(paramsId) {
   const { photographers, media } = await fetchPhotographerAndMedia();
 
   const photographer = photographers.find(
-    (photographer) => photographer.id === paramsId
+      (photographer) => photographer.id === paramsId
   );
 
   if (photographer) {
@@ -66,9 +80,10 @@ async function getPhotographerAndMedia(paramsId) {
   }
 
   const mediaFromPhotographer = media.filter(
-    (media) => media.photographerId === paramsId
+      (media) => media.photographerId === paramsId
   );
 
+  await displayFilters(mediaFromPhotographer, photographer.name)
   await displayMedia(mediaFromPhotographer, photographer.name)
   await displayLikes(mediaFromPhotographer, photographer)
   await displayPrice(photographer)

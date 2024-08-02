@@ -252,7 +252,7 @@ export function mediaFactory(data, photographerName) {
     if (isVideo) {
       newMediaElement = document.createElement('video');
       newMediaElement.classList.add('lightbox_media');
-      newMediaElement.setAttribute('controls', ''); // Ajoutez les contrôles
+      newMediaElement.setAttribute('controls', '');
       newMediaElement.setAttribute('autoplay', '');
       newMediaElement.setAttribute('muted', '');
       newMediaElement.src = selectedDirectionMedia.src;
@@ -323,6 +323,26 @@ export function mediaFactory(data, photographerName) {
     lightboxModal.addEventListener('keydown', (e) =>
         focusTrapHandler(e, firstFocusableElement, lastFocusableElement)
     )
+  }
+
+  const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
+    let isTabPressed = e.key === 'Tab' || e.keyCode === 9
+
+    if (!isTabPressed) {
+      return
+    }
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusableElement) {
+        lastFocusableElement.focus()
+        e.preventDefault()
+      }
+    } else {
+      if (document.activeElement === lastFocusableElement) {
+        firstFocusableElement.focus()
+        e.preventDefault()
+      }
+    }
   }
 
   return { getMediaCard }
